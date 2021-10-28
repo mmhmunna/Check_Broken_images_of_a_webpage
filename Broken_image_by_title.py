@@ -1,11 +1,12 @@
 from selenium import webdriver
 import time
+from webdriver_manager.chrome import ChromeDriverManager
 
-driver = webdriver.Chrome("driver/chromedriver")
+driver = webdriver.Chrome(ChromeDriverManager().install())
 driver.maximize_window()
-baseurl = "https://www.munna.cyou/"
+baseurl = "https://staging.deligram.com/"
 driver.get(baseurl)
-time.sleep(6)
+time.sleep(4)
 image_tag = driver.find_elements_by_tag_name('img')
 image_links = []
 for link in image_tag:
@@ -24,15 +25,14 @@ for link in range (total_link):
         driver.get(url)
         time.sleep(2)
         title = driver.title
-        if ("error" in title):
+        if ("Error" in title):   #this "error" will be change as per as title
             broken_images.append(url)
         else:
             correct_images.append(url)
 
 
-print('Total Images' + ' ' + str(len(image_links)))
-print('Total empty or None Links' + ' ' + str(len(empty_or_None_Links)))
-print('Total Correct Images'+ ' ' + str(len(correct_images)))
-print('Total Broken Images' + ' ' + str(len(broken_images)))
-print('Broken images Link are here:')
-print(broken_images)
+print('Total Images Link' + ' ' + str(total_link))
+print('Total empty or None Images Links' + ' ' + str(len(empty_or_None_Links)))
+print('Total Correct Images Link' + ' ' + str(len(correct_images)))
+print('Total Broken Images Link' + ' ' + str(len(broken_images)))
+print('Broken images Link are here:' + ' ' + str(broken_images))
